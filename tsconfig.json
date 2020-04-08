@@ -1,0 +1,6 @@
+{
+  "module": "commonjs",
+  "compilerOptions": {
+    "typeRoots": ["./node_modules/@types", "./typings"]
+  }
+}
