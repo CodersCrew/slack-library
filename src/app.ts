@@ -1,7 +1,16 @@
-import * as dotenv from "dotenv";
+const localtunnel = require("localtunnel");
+const dotenv = require("dotenv");
 
 dotenv.config();
 
-function init() {}
+if (process.env.NODE_ENV !== "production") {
+  (async () => {
+    await localtunnel({
+      port: 3000,
+      host: process.env.TUNNEL_HOST,
+      subdomain: process.env.TUNNEL_SUBDOMAIN,
+    });
 
-init();
+    console.log("⚡️ Tunnel is running!");
+  })();
+}
