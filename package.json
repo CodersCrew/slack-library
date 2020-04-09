@@ -25,6 +25,7 @@
     "typescript": "^3.8.3"
   },
   "dependencies": {
+    "@slack/bolt": "^2.0.0",
     "nodemon": "^2.0.3"
   }
 }
