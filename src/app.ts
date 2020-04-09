@@ -19,6 +19,10 @@ if (process.env.NODE_ENV !== "production") {
 const app = new App({
   token: process.env.BOT_TOKEN,
   signingSecret: process.env.BOT_SECRET,
+  endpoints: {
+    events: "/slack/events",
+    commands: "/slack/commands",
+  },
 });
 
 app.message("hello", async ({ message, say }) => {
