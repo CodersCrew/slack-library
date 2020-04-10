@@ -18,6 +18,8 @@
   },
   "homepage": "https://github.com/CodersCrew/slack-library#readme",
   "devDependencies": {
+    "@types/localtunnel": "^2.0.0",
+    "@types/mongoose": "^5.7.10",
     "@types/node": "^13.11.1",
     "dotenv": "^8.2.0",
     "localtunnel": "^2.0.0",
@@ -27,6 +29,7 @@
   },
   "dependencies": {
     "@slack/bolt": "^2.0.0",
+    "mongoose": "^5.9.7",
     "nodemon": "^2.0.3"
   }
 }
