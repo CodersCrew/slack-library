@@ -1,6 +1,6 @@
-const { App } = require("@slack/bolt");
-const localtunnel = require("localtunnel");
-const dotenv = require("dotenv");
+import { App } from "@slack/bolt";
+import localtunnel from "localtunnel";
+import * as dotenv from "dotenv";
 
 dotenv.config();
 
