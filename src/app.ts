@@ -1,8 +1,10 @@
-const { App } = require("@slack/bolt");
-const localtunnel = require("localtunnel");
-const dotenv = require("dotenv");
+import { App } from "@slack/bolt";
+import localtunnel from "localtunnel";
+import * as dotenv from "dotenv";
 
 dotenv.config();
+
+import { addBook } from "./db/book_repository";
 
 if (process.env.NODE_ENV !== "production") {
   (async () => {
@@ -27,6 +29,7 @@ const app = new App({
 
 app.message("hello", async ({ message, say }) => {
   await say({
+    text: "text",
     blocks: [
       {
         type: "section",
@@ -62,14 +65,13 @@ app.message("hello", async ({ message, say }) => {
 });
 
 app.command("/add-book", async ({ ack, body, context }) => {
-  await ack();
-
   try {
-    const result = await app.client.views.open({
+    await app.client.views.open({
       token: context.botToken,
       trigger_id: body.trigger_id,
       view: {
         type: "modal",
+        callback_id: "add-book-modal",
         title: {
           type: "plain_text",
           text: "Add new book",
@@ -96,8 +98,10 @@ app.command("/add-book", async ({ ack, body, context }) => {
           },
           {
             type: "input",
+            block_id: "title_book",
             element: {
               type: "plain_text_input",
+              action_id: "input",
             },
             label: {
               type: "plain_text",
@@ -108,6 +112,7 @@ app.command("/add-book", async ({ ack, body, context }) => {
         ],
       },
     });
+    await ack();
   } catch (error) {
     console.error(error);
   }
@@ -116,6 +121,14 @@ app.command("/add-book", async ({ ack, body, context }) => {
 app.action("button_click", async ({ body, ack, say }) => {
   await ack();
   await say(`<@${body.user.id}> clicked the button`);
+});
+
+app.view("add-book-modal", async ({ ack, body }) => {
+  const title = body.view.state.values["title_book"]["input"].value;
+
+  addBook(title);
+
+  await ack();
 });
 
 (async () => {
