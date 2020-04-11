@@ -5,6 +5,7 @@ import * as dotenv from "dotenv";
 dotenv.config();
 
 import { addBook } from "./db/book_repository";
+import { setEventListeners } from "./event_listener";
 
 if (process.env.NODE_ENV !== "production") {
   (async () => {
@@ -27,6 +28,7 @@ const app = new App({
   },
 });
 
+setEventListeners(app);
 app.message("hello", async ({ message, say }) => {
   await say({
     text: "text",
