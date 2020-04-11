@@ -4,19 +4,24 @@ import * as dotenv from "dotenv";
 
 dotenv.config();
 
-import { addBook } from "./db/book_repository";
+import { setHomeView } from "./home_view";
+import { setCommands } from "./commands";
+import { setActionListeners } from "./action_listeners";
+import { setViewListeners } from "./view_listeners";
 import { setEventListeners } from "./event_listener";
 
 if (process.env.NODE_ENV !== "production") {
-  (async () => {
-    await localtunnel({
-      port: 3000,
-      host: process.env.TUNNEL_HOST,
-      subdomain: process.env.TUNNEL_SUBDOMAIN,
+  localtunnel({
+    port: 3000,
+    host: process.env.TUNNEL_HOST,
+    subdomain: process.env.TUNNEL_SUBDOMAIN,
+  })
+    .then(() => {
+      console.log("⚡️ Tunnel is running!");
+    })
+    .catch(() => {
+      console.log("errr");
     });
-
-    console.log("⚡️ Tunnel is running!");
-  })();
 }
 
 const app = new App({
