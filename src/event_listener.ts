@@ -9,11 +9,6 @@ export const setEventListeners = (app: App) => {
         getBookList().then(async (books) => {
           const booksWithOwners = books.map(async (book) => {
             const owners = (book as any).owners.map(async (owner: any) => {
-              const user = await app.client.users.info({
-                token: context.botToken,
-                user: owner,
-                include_locale: true,
-              });
 
               return user.user;
             });
@@ -27,6 +22,7 @@ export const setEventListeners = (app: App) => {
             (result.view as any).id,
             await Promise.all(booksWithOwners),
           );
+          return getUserDetails(app, context.botToken, owner);
         });
       });
     } catch (error) {
