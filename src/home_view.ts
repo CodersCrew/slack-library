@@ -37,6 +37,14 @@ export const setHomeView = (app: App, token: string, userId: string) => {
               },
               action_id: "add_book",
             },
+            {
+              type: "button",
+              text: {
+                type: "plain_text",
+                text: "Filters",
+              },
+              action_id: "set_filter",
+            },
           ],
         },
       ],
