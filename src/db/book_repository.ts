@@ -7,5 +7,6 @@ export const addBook = (title: string) => {
 };
 
 export const getBookList = () => {
-  return Book.find();
+  return Book.find().lean();
+};
 };

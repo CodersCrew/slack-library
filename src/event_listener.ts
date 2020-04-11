@@ -6,8 +6,27 @@ export const setEventListeners = (app: App) => {
   app.event("app_home_opened", async ({ event, context }) => {
     try {
       setHomeView(app, context.botToken, event.user).then((result) => {
-        getBookList().then((books) => {
-          updateHomeView(app, context.botToken, (result.view as any).id, books);
+        getBookList().then(async (books) => {
+          const booksWithOwners = books.map(async (book) => {
+            const owners = (book as any).owners.map(async (owner: any) => {
+              const user = await app.client.users.info({
+                token: context.botToken,
+                user: owner,
+                include_locale: true,
+              });
+
+              return user.user;
+            });
+
+            return { ...book, owners: (await Promise.all(owners)) as any[] };
+          });
+
+          updateHomeView(
+            app,
+            context.botToken,
+            (result.view as any).id,
+            await Promise.all(booksWithOwners),
+          );
         });
       });
     } catch (error) {
