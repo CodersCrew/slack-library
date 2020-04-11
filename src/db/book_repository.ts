@@ -5,3 +5,7 @@ export const addBook = (title: string) => {
 
   return book.save();
 };
+
+export const getBookList = () => {
+  return Book.find();
+};
