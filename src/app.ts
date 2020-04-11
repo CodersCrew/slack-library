@@ -4,7 +4,6 @@ import * as dotenv from "dotenv";
 
 dotenv.config();
 
-import { setHomeView } from "./home_view";
 import { setCommands } from "./commands";
 import { setActionListeners } from "./action_listeners";
 import { setViewListeners } from "./view_listeners";
@@ -38,45 +37,6 @@ setActionListeners(app);
 setViewListeners(app);
 setEventListeners(app);
 
-app.message("hello", async ({ message, say }) => {
-  await say({
-    text: "text",
-    blocks: [
-      {
-        type: "section",
-        text: {
-          type: "mrkdwn",
-          text: `Hey there <@${message.user}>!`,
-        },
-        accessory: {
-          type: "button",
-          text: {
-            type: "plain_text",
-            text: "Click Me",
-          },
-          action_id: "button_click",
-        },
-      },
-      {
-        type: "actions",
-        elements: [
-          {
-            type: "button",
-            text: {
-              type: "plain_text",
-              text: "Reply to review",
-              emoji: false,
-            },
-            action_id: "button_click",
-          },
-        ],
-      },
-    ],
-  });
-});
-
-(async () => {
-  await app.start(3000);
-
+app.start(3000).then(() => {
   console.log("⚡️ Bot is running!");
-})();
+});
