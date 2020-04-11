@@ -1,5 +1,7 @@
 import { App } from "@slack/bolt";
 
+import { BookDTO, UserDTO } from "./db/db";
+
 export const setHomeView = (app: App, token: string, userId: string) => {
   return app.client.views.publish({
     token,
@@ -52,10 +54,7 @@ export const setHomeView = (app: App, token: string, userId: string) => {
   });
 };
 
-const renderBook = (
-  acc: any[],
-  { name, _id, owners }: { name: string; _id: string; owners: {}[] },
-) => {
+const renderBook = (acc: any[], { name, _id, owners }: BookDTO) => {
   return [
     ...acc,
     {
@@ -77,6 +76,16 @@ const renderBook = (
           action_id: "remove_book",
           value: _id,
         },
+
+        {
+          type: "button",
+          text: {
+            type: "plain_text",
+            text: "I got this book too",
+          },
+          action_id: "add_owner",
+          value: _id,
+        },
       ],
     },
     {
@@ -86,19 +95,7 @@ const renderBook = (
           type: "mrkdwn",
           text: "Owners",
         },
-        ...owners.map(
-          (owner: {
-            real_name: string;
-            name: string;
-            profile: { image_24: string };
-          }) => {
-            return {
-              type: "image",
-              image_url: owner.profile.image_24,
-              alt_text: owner.real_name || owner.name,
-            };
-          },
-        ),
+        ...createUserImagesList(owners as UserDTO[]),
       ],
     },
   ];
@@ -108,7 +105,7 @@ export const updateHomeView = (
   app: App,
   token: string,
   viewId: string,
-  books: any[] = [],
+  books: BookDTO[] = [],
 ) => {
   return app.client.views.update({
     token,
@@ -146,4 +143,20 @@ export const updateHomeView = (
       ],
     },
   });
+};
+
+const createUserImagesList = (owners: UserDTO[]) => {
+  return owners.map(
+    (owner: {
+      real_name: string;
+      name: string;
+      profile: { image_24: string };
+    }) => {
+      return {
+        type: "image",
+        image_url: owner.profile.image_24,
+        alt_text: owner.real_name || owner.name,
+      };
+    },
+  );
 };

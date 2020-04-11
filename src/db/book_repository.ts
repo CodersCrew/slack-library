@@ -1,4 +1,4 @@
-import { Book } from "./db";
+import { Book, BookDTO } from "./db";
 
 export const addBook = (title: string, userId: string) => {
   const book = new Book({ name: title, owners: [userId] });
@@ -7,7 +7,12 @@ export const addBook = (title: string, userId: string) => {
 };
 
 export const getBookList = () => {
-  return Book.find().lean();
+  return Book.find()
+    .lean()
+    .exec()
+    .then((books) => {
+      return books as BookDTO[];
+    });
 };
 
 export const removeBook = (id: string) => {
