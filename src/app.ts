@@ -30,7 +30,9 @@ const app = new App({
 
 setCommands(app);
 setActionListeners(app);
+setViewListeners(app);
 setEventListeners(app);
+
 app.message("hello", async ({ message, say }) => {
   await say({
     text: "text",
@@ -66,16 +68,6 @@ app.message("hello", async ({ message, say }) => {
       },
     ],
   });
-});
-
-
-
-app.view("add-book-modal", async ({ ack, body }) => {
-  const title = body.view.state.values["title_book"]["input"].value;
-
-  addBook(title);
-
-  await ack();
 });
 
 (async () => {
