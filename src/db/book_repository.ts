@@ -1,7 +1,7 @@
 import { Book } from "./db";
 
-export const addBook = (title: string) => {
-  const book = new Book({ title });
+export const addBook = (title: string, userId: string) => {
+  const book = new Book({ name: title, owners: [userId] });
 
   return book.save();
 };

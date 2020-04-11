@@ -5,4 +5,7 @@ mongoose.connect(process.env.DB_URL, {
   useUnifiedTopology: true,
 });
 
-export const Book = mongoose.model("Books", { name: String } as any);
+export const Book = mongoose.model("Books", {
+  name: String,
+  owners: [String],
+} as any);
