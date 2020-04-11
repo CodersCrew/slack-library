@@ -81,7 +81,30 @@ export const updateHomeView = (
         type: "plain_text",
         text: "Updated modal",
       },
-      blocks: books.reduce(renderBook, []),
+      blocks: [
+        {
+          type: "actions",
+          elements: [
+            {
+              type: "button",
+              text: {
+                type: "plain_text",
+                text: "Add book",
+              },
+              action_id: "add_book",
+            },
+            {
+              type: "button",
+              text: {
+                type: "plain_text",
+                text: "Filters",
+              },
+              action_id: "set_filter",
+            },
+          ],
+        },
+        ...books.reduce(renderBook, []),
+      ],
     },
   });
 };
