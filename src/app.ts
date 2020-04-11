@@ -28,6 +28,7 @@ const app = new App({
   },
 });
 
+setActionListeners(app);
 setEventListeners(app);
 app.message("hello", async ({ message, say }) => {
   await say({
@@ -120,10 +121,6 @@ app.command("/add-book", async ({ ack, body, context }) => {
   }
 });
 
-app.action("button_click", async ({ body, ack, say }) => {
-  await ack();
-  await say(`<@${body.user.id}> clicked the button`);
-});
 
 app.view("add-book-modal", async ({ ack, body }) => {
   const title = body.view.state.values["title_book"]["input"].value;
