@@ -41,6 +41,7 @@ export const openAddBookModal = (
           element: {
             type: "plain_text_input",
             action_id: "input",
+            min_length: 3,
           },
           label: {
             type: "plain_text",
