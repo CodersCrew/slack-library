@@ -20,8 +20,10 @@ export interface UserDTO {
   };
 }
 
-export const Book = mongoose.model("Books", {
+const BookSchema = new mongoose.Schema({
   name: String,
   owners: [String],
-} as any);
   createdBy: String,
+});
+
+export const Book = mongoose.model("Books", BookSchema);

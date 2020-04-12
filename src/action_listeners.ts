@@ -15,7 +15,7 @@ export const setActionListeners = (app: App) => {
     }
   });
 
-  app.action("remove_book", async ({ body, ack, context, action }) => {
+  app.action("remove_book", async ({ body, ack, action }) => {
     try {
       if (!isButtonAction(action)) return await ack();
 
