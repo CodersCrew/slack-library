@@ -32,22 +32,8 @@ export const setHomeView = (app: App, token: string, userId: string) => {
         {
           type: "actions",
           elements: [
-            {
-              type: "button",
-              text: {
-                type: "plain_text",
-                text: "Add book",
-              },
-              action_id: "add_book",
-            },
-            {
-              type: "button",
-              text: {
-                type: "plain_text",
-                text: "Filters",
-              },
-              action_id: "set_filter",
-            },
+            createButton("Add book", "add_book"),
+            createButton("Filters", "set_filter"),
           ],
         },
       ],
@@ -113,22 +99,8 @@ export const updateHomeView = (
         {
           type: "actions",
           elements: [
-            {
-              type: "button",
-              text: {
-                type: "plain_text",
-                text: "Add book",
-              },
-              action_id: "add_book",
-            },
-            {
-              type: "button",
-              text: {
-                type: "plain_text",
-                text: "Filters",
-              },
-              action_id: "set_filter",
-            },
+            createButton("Add book", "add_book"),
+            createButton("Filters", "set_filter"),
           ],
         },
         ...books.reduce(renderBook, []),

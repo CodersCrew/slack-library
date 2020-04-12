@@ -1,4 +1,8 @@
-export function createButton(text: string, actionId: string, value: string) {
+export function createButton(
+  text: string,
+  actionId: string,
+  value: string = "",
+) {
   return {
     type: "button",
     text: {
