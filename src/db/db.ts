@@ -9,6 +9,7 @@ export interface BookDTO {
   _id: string;
   name: string;
   owners: (string | UserDTO)[];
+  createdBy: string;
 }
 
 export interface UserDTO {
@@ -23,3 +24,4 @@ export const Book = mongoose.model("Books", {
   name: String,
   owners: [String],
 } as any);
+  createdBy: String,

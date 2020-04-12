@@ -1,6 +1,7 @@
 import { App } from "@slack/bolt";
 
 import { BookDTO, UserDTO } from "./db/db";
+import { createButton } from "./utils/slack_buttons";
 
 export const setHomeView = (app: App, token: string, userId: string) => {
   return app.client.views.publish({
@@ -54,7 +55,18 @@ export const setHomeView = (app: App, token: string, userId: string) => {
   });
 };
 
-const renderBook = (acc: any[], { name, _id, owners }: BookDTO) => {
+const renderBook = (
+  acc: any[],
+  { name, _id, owners, isCreator }: BookDTO & { isCreator: boolean },
+) => {
+  let bookButtonList = [];
+
+  if (isCreator) {
+    bookButtonList.push(createButton("Remove book", "remove_book", _id));
+  } else {
+    bookButtonList.push(createButton("I got this book too", "add_owner", _id));
+  }
+
   return [
     ...acc,
     {
@@ -66,27 +78,7 @@ const renderBook = (acc: any[], { name, _id, owners }: BookDTO) => {
     },
     {
       type: "actions",
-      elements: [
-        {
-          type: "button",
-          text: {
-            type: "plain_text",
-            text: "Remove book",
-          },
-          action_id: "remove_book",
-          value: _id,
-        },
-
-        {
-          type: "button",
-          text: {
-            type: "plain_text",
-            text: "I got this book too",
-          },
-          action_id: "add_owner",
-          value: _id,
-        },
-      ],
+      elements: bookButtonList,
     },
     {
       type: "context",
@@ -105,7 +97,7 @@ export const updateHomeView = (
   app: App,
   token: string,
   viewId: string,
-  books: BookDTO[] = [],
+  books: (BookDTO & { isCreator: boolean })[] = [],
 ) => {
   return app.client.views.update({
     token,

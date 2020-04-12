@@ -2,9 +2,10 @@ import { App } from "@slack/bolt";
 import { setHomeView, updateHomeView } from "./home_view";
 import { getBookList } from "./db/book_repository";
 import { getUserDetails } from "./slack_user_repository";
+import { getUserIdFromAppHomeEvent } from "./utils/slack_utils";
 
 export const setEventListeners = (app: App) => {
-  app.event("app_home_opened", async ({ event, context }) => {
+  app.event("app_home_opened", async ({ event, context, body }) => {
     try {
       const { view } = await setHomeView(app, context.botToken, event.user);
 
@@ -15,7 +16,13 @@ export const setEventListeners = (app: App) => {
           return getUserDetails(app, context.botToken, owner);
         });
 
-        return { ...book, owners: await Promise.all(owners) };
+        const userId = getUserIdFromAppHomeEvent(body);
+
+        return {
+          ...book,
+          owners: await Promise.all(owners),
+          isCreator: userId === book.createdBy,
+        };
       });
 
       updateHomeView(

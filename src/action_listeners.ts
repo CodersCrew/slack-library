@@ -1,7 +1,9 @@
-import { App } from "@slack/bolt";
+import { App, ButtonAction } from "@slack/bolt";
+
 import { openAddBookModal } from "./add_book_modal";
 import { openFilterBookModal } from "./filter_modal";
 import { removeBook } from "./db/book_repository";
+import { getUserIdFrom, getValueFrom } from "./utils/slack_utils";
 
 export const setActionListeners = (app: App) => {
   app.action("add_book", async ({ body, ack, context }) => {
@@ -15,7 +17,9 @@ export const setActionListeners = (app: App) => {
 
   app.action("remove_book", async ({ body, ack, context, action }) => {
     try {
-      removeBook((action as any).value);
+      if (!isButtonAction(action)) return await ack();
+
+      removeBook(getValueFrom(action), getUserIdFrom(body));
       await ack();
     } catch (error) {
       console.error(error);
@@ -31,3 +35,9 @@ export const setActionListeners = (app: App) => {
     }
   });
 };
+
+function isButtonAction(
+  action: unknown | ButtonAction,
+): action is ButtonAction {
+  return !!(action as ButtonAction).value;
+}
