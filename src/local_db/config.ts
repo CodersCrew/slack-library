@@ -1,5 +1,5 @@
 interface UserConfig {
-  homeViewId: string;
+  homeViewId?: string;
 }
 
 interface Config {
@@ -8,7 +8,10 @@ interface Config {
 
 const config: Config = {};
 
-export function setUserConfig(userId: string, options: UserConfig): void {
+export function setUserConfig(
+  userId: string,
+  options: Partial<UserConfig>,
+): void {
   config[userId] = options;
 }
 
