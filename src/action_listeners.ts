@@ -4,6 +4,8 @@ import { openAddBookModal } from "./add_book_modal";
 import { openFilterBookModal } from "./filter_modal";
 import { removeBook } from "./db/book_repository";
 import { getUserIdFrom, getValueFrom } from "./utils/slack_utils";
+import { getBookListWithOwners } from "./services/update_view_with_booklist";
+import { getUserConfig } from "./local_db/config";
 
 export const setActionListeners = (app: App) => {
   app.action("add_book", async ({ body, ack, context }) => {
@@ -15,11 +17,14 @@ export const setActionListeners = (app: App) => {
     }
   });
 
-  app.action("remove_book", async ({ body, ack, action }) => {
+  app.action("remove_book", async ({ body, ack, action, context }) => {
     try {
       if (!isButtonAction(action)) return await ack();
 
-      removeBook(getValueFrom(action), getUserIdFrom(body));
+      const config = getUserConfig(body.user.id);
+
+      await removeBook(getValueFrom(action), getUserIdFrom(body));
+      await getBookListWithOwners(app, context, body, config.homeViewId);
       await ack();
     } catch (error) {
       console.error(error);
