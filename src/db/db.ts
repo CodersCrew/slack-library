@@ -8,6 +8,7 @@ mongoose.connect(process.env.DB_URL, {
 export interface BookDTO {
   _id: string;
   name: string;
+  description: string;
   owners: (string | UserDTO)[];
   createdBy: string;
 }
@@ -26,6 +27,7 @@ export interface UserDTO {
 
 const BookSchema = new mongoose.Schema({
   name: String,
+  description: String,
   owners: [String],
   createdBy: String,
 });
