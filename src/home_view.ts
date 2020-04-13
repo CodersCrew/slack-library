@@ -3,7 +3,10 @@ import { App } from "@slack/bolt";
 import { UserDTO, Book } from "./db/db";
 import { createButton } from "./utils/slack_buttons";
 
-const renderBook = (acc: any[], { name, _id, owners, isCreator }: Book) => {
+const renderBook = (
+  acc: any[],
+  { name, description, _id, owners, isCreator }: Book,
+) => {
   let bookButtonList = [];
 
   if (isCreator) {
@@ -18,7 +21,13 @@ const renderBook = (acc: any[], { name, _id, owners, isCreator }: Book) => {
       type: "section",
       text: {
         type: "mrkdwn",
-        text: `*${name}*\nHis book is very compatible with XP. It is not about drawing pictures of a domain; it is about how you think of it, the language you use to talk about it, and how you organize your software to reflect your improving understanding of it. Eric thinks that learning about your problem domain is as likely to happen at the end of your project as at the beginning, and so refactoring is a big part of his technique.`,
+        text: `*${name}*\n${description}`,
+      },
+      accessory: {
+        type: "image",
+        image_url:
+          "https://images-na.ssl-images-amazon.com/images/I/51sZW87slRL._SX375_BO1,204,203,200_.jpg",
+        alt_text: "Windsor Court Hotel thumbnail",
       },
     },
     {

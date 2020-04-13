@@ -49,6 +49,21 @@ export const openAddBookModal = (
             emoji: true,
           },
         },
+        {
+          type: "input",
+          block_id: "description_book",
+          element: {
+            type: "plain_text_input",
+            action_id: "input",
+            min_length: 3,
+            multiline: true,
+          },
+          label: {
+            type: "plain_text",
+            text: "Description",
+            emoji: true,
+          },
+        },
       ],
     },
   });
