@@ -1,13 +1,9 @@
 import { App } from "@slack/bolt";
 
-import { BookDTO, UserDTO } from "./db/db";
+import { UserDTO, Book } from "./db/db";
 import { createButton } from "./utils/slack_buttons";
 
-
-const renderBook = (
-  acc: any[],
-  { name, _id, owners, isCreator }: BookDTO & { isCreator: boolean },
-) => {
+const renderBook = (acc: any[], { name, _id, owners, isCreator }: Book) => {
   let bookButtonList = [];
 
   if (isCreator) {
@@ -46,7 +42,7 @@ export const updateHomeView = (
   app: App,
   token: string,
   viewId: string,
-  books: (BookDTO & { isCreator: boolean })[] = [],
+  books: Book[] = [],
 ) => {
   return app.client.views.update({
     token,

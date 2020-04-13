@@ -1,15 +1,11 @@
-import {
-  SlackViewAction,
-  SlackAction,
-  InteractiveMessage,
-  BasicElementAction,
-  ButtonAction,
-  AppHomeOpenedEvent,
-} from "@slack/bolt";
+import { SlackViewAction, SlackAction, ButtonAction } from "@slack/bolt";
 
 interface AppHomeEventOnOpen {
   event: {
     user: string;
+  };
+  user: {
+    id: string;
   };
 }
 
@@ -20,7 +16,11 @@ export const getUserIdFrom = (body: SlackViewAction | SlackAction) => {
 export const getUserIdFromAppHomeEvent = <T extends AppHomeEventOnOpen>(
   body: T,
 ) => {
-  return body.event.user;
+  if (body.event) {
+    return body.event.user;
+  }
+
+  return body.user.id;
 };
 
 export const getValueFrom = (action: ButtonAction) => {
