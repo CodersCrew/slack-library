@@ -1,7 +1,7 @@
 import { App } from "@slack/bolt";
 
-import { UserDTO, Book } from "./db/db";
-import { createButton } from "./utils/slack_buttons";
+import { UserDTO, Book } from "../db/db";
+import { createButton } from "../utils/slack_buttons";
 
 const renderBook = (
   acc: any[],
