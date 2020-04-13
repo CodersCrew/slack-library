@@ -9,6 +9,8 @@ export interface BookDTO {
   _id: string;
   name: string;
   description: string;
+  image: string;
+  rating: number;
   owners: (string | UserDTO)[];
   createdBy: string;
 }
@@ -28,6 +30,8 @@ export interface UserDTO {
 const BookSchema = new mongoose.Schema({
   name: String,
   description: String,
+  image: String,
+  rating: Number,
   owners: [String],
   createdBy: String,
 });

@@ -5,7 +5,7 @@ import { createButton } from "./utils/slack_buttons";
 
 const renderBook = (
   acc: any[],
-  { name, description, _id, owners, isCreator }: Book,
+  { name, description, _id, owners, isCreator, image, rating }: Book,
 ) => {
   let bookButtonList = [];
 
@@ -21,12 +21,13 @@ const renderBook = (
       type: "section",
       text: {
         type: "mrkdwn",
-        text: `*${name}*\n${description}`,
+        text: `*${name}*\n${Array(Math.floor(rating))
+          .fill("★")
+          .join("")}\n${description}`,
       },
       accessory: {
         type: "image",
-        image_url:
-          "https://images-na.ssl-images-amazon.com/images/I/51sZW87slRL._SX375_BO1,204,203,200_.jpg",
+        image_url: image,
         alt_text: "Windsor Court Hotel thumbnail",
       },
     },
