@@ -9,10 +9,12 @@ export const setViewListeners = (app: App) => {
     "add-book-modal",
     async ({ ack, body, context, payload, ...rest }) => {
       const title = body.view.state.values["title_book"]["input"].value;
+      const description =
+        body.view.state.values["description_book"]["input"].value;
 
       const config = getUserConfig(body.user.id);
 
-      await addBook(title, getUserIdFrom(body));
+      await addBook(title, description, getUserIdFrom(body));
 
       await getBookListWithOwners(app, context, body, config.homeViewId);
 

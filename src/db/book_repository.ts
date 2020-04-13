@@ -1,8 +1,13 @@
 import { Book, BookDTO } from "./db";
 import { createObjectId } from "../utils/db_utils";
 
-export const addBook = (title: string, userId: string) => {
-  const book = new Book({ name: title, owners: [userId], createdBy: userId });
+export const addBook = (title: string, description: string, userId: string) => {
+  const book = new Book({
+    name: title,
+    description,
+    owners: [userId],
+    createdBy: userId,
+  });
 
   return book.save();
 };
