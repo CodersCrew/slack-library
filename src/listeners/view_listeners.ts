@@ -12,8 +12,10 @@ export const setViewListeners = (app: App) => {
       let bookDetails = {
         title: body.view.state.values["title_book"]["input"].value,
         description: body.view.state.values["description_book"]["input"].value,
-        amazonURL: body.view.state.values["amazon_book"]["input"]
-          .value as string,
+        amazonURL:
+          (body.view.state.values["amazon_book"]["input"].value as
+            | string
+            | undefined) || "",
         rating: 0,
         image: "",
       };

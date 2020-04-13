@@ -77,6 +77,7 @@ export const openAddBookModal = (
             text: "Amazon URL",
             emoji: true,
           },
+          optional: true,
         },
         {
           type: "section",

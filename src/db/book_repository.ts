@@ -6,8 +6,15 @@ export const addBook = (
     title,
     description,
     image,
+    amazonURL,
     rating = 0,
-  }: { title: string; description: string; image: string; rating: number },
+  }: {
+    title: string;
+    description: string;
+    image: string;
+    rating: number;
+    amazonURL: string;
+  },
   userId: string,
 ) => {
   const book = new Book({
@@ -15,6 +22,7 @@ export const addBook = (
     description,
     image,
     rating,
+    amazonURL,
     owners: [userId],
     createdBy: userId,
   });
