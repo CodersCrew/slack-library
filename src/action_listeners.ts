@@ -39,6 +39,14 @@ export const setActionListeners = (app: App) => {
       console.error(error);
     }
   });
+
+  app.action("scan_website", async ({ ack }) => {
+    try {
+      await ack();
+    } catch (error) {
+      console.error(error);
+    }
+  });
 };
 
 function isButtonAction(

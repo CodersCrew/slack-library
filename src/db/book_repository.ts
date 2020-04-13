@@ -1,10 +1,20 @@
 import { Book, BookDTO } from "./db";
 import { createObjectId } from "../utils/db_utils";
 
-export const addBook = (title: string, description: string, userId: string) => {
+export const addBook = (
+  {
+    title,
+    description,
+    image,
+    rating = 0,
+  }: { title: string; description: string; image: string; rating: number },
+  userId: string,
+) => {
   const book = new Book({
     name: title,
     description,
+    image,
+    rating,
     owners: [userId],
     createdBy: userId,
   });

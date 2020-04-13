@@ -6,9 +6,11 @@ export const setEventListeners = (app: App) => {
   app.event("app_home_opened", async ({ event, context, body }) => {
     try {
       if (event.view) {
-        setUserConfig(body.event.user, { homeViewId: (event.view as any).id });
+        const rootViewId = (event.view as any).id;
 
-        await getBookListWithOwners(app, context, body, (event.view as any).id);
+        setUserConfig(body.event.user, { homeViewId: rootViewId });
+
+        await getBookListWithOwners(app, context, body, rootViewId);
       }
     } catch (error) {
       console.error(error);

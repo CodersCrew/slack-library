@@ -64,6 +64,37 @@ export const openAddBookModal = (
             emoji: true,
           },
         },
+        {
+          type: "input",
+          block_id: "amazon_book",
+          element: {
+            type: "plain_text_input",
+            action_id: "input",
+            initial_value: "abc",
+          },
+          label: {
+            type: "plain_text",
+            text: "Amazon URL",
+            emoji: true,
+          },
+        },
+        {
+          type: "section",
+          text: {
+            type: "mrkdwn",
+            text: "You can add a button alongside text in your message. ",
+          },
+          accessory: {
+            type: "button",
+            text: {
+              type: "plain_text",
+              text: "Scan",
+              emoji: true,
+            },
+            value: "click_me_123",
+            action_id: "scan_website",
+          },
+        },
       ],
     },
   });
