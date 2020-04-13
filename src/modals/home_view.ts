@@ -5,7 +5,7 @@ import { createButton } from "../utils/slack_buttons";
 
 const renderBook = (
   acc: any[],
-  { name, description, _id, owners, isCreator, image, rating }: Book,
+  { name, description, _id, owners, isCreator, image, rating, amazonURL }: Book,
 ) => {
   let bookButtonList = [];
 
@@ -17,20 +17,7 @@ const renderBook = (
 
   return [
     ...acc,
-    {
-      type: "section",
-      text: {
-        type: "mrkdwn",
-        text: `*${name}*\n${Array(Math.floor(rating))
-          .fill("★")
-          .join("")}\n${description}`,
-      },
-      accessory: {
-        type: "image",
-        image_url: image,
-        alt_text: "Windsor Court Hotel thumbnail",
-      },
-    },
+    renderSectionImage(image, name, amazonURL, rating, description),
     {
       type: "actions",
       elements: bookButtonList,
@@ -93,3 +80,47 @@ const createUserImagesList = (owners: UserDTO[]) => {
     },
   );
 };
+
+function mapRatingToStars(rating: number): string {
+  return Array(Math.floor(rating)).fill("★").join("");
+}
+
+function mapTitle(title: string, url: string) {
+  if (url.length === 0) return title;
+
+  return `<${url}|${title}>`;
+}
+
+function renderSectionImage(
+  image: string,
+  name: string,
+  amazonURL: string,
+  rating: number,
+  description: string,
+) {
+  if (image.length === 0)
+    return {
+      type: "section",
+      text: {
+        type: "mrkdwn",
+        text: `*${mapTitle(name, amazonURL)}*\n${mapRatingToStars(
+          rating,
+        )}\n${description}`,
+      },
+    };
+
+  return {
+    type: "section",
+    text: {
+      type: "mrkdwn",
+      text: `*${mapTitle(name, amazonURL)}*\n${mapRatingToStars(
+        rating,
+      )}\n${description}`,
+    },
+    accessory: {
+      type: "image",
+      image_url: image,
+      alt_text: name,
+    },
+  };
+}
