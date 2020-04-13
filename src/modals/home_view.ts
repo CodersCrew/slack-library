@@ -98,16 +98,8 @@ function renderSectionImage(
   rating: number,
   description: string,
 ) {
-  if (image.length === 0)
-    return {
-      type: "section",
-      text: {
-        type: "mrkdwn",
-        text: `*${mapTitle(name, amazonURL)}*\n${mapRatingToStars(
-          rating,
-        )}\n${description}`,
-      },
-    };
+  const placeholder =
+    "https://d827xgdhgqbnd.cloudfront.net/wp-content/uploads/2016/04/09121712/book-cover-placeholder.png";
 
   return {
     type: "section",
@@ -119,7 +111,7 @@ function renderSectionImage(
     },
     accessory: {
       type: "image",
-      image_url: image,
+      image_url: image.length === 0 ? placeholder : image,
       alt_text: name,
     },
   };
