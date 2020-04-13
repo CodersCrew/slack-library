@@ -12,6 +12,10 @@ export interface BookDTO {
   createdBy: string;
 }
 
+export interface Book extends BookDTO {
+  isCreator: boolean;
+}
+
 export interface UserDTO {
   real_name: string;
   name: string;
