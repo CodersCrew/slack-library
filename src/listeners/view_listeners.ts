@@ -1,9 +1,9 @@
 import { App } from "@slack/bolt";
-import { addBook } from "./db/book_repository";
-import { getUserIdFrom } from "./utils/slack_utils";
-import { getUserConfig } from "./local_db/config";
-import { getBookListWithOwners } from "./services/update_view_with_booklist";
-import { fetchBookDetails } from "./services/fetch_book_details";
+import { addBook } from "../db/book_repository";
+import { getUserIdFrom } from "../utils/slack_utils";
+import { getUserConfig } from "../local_db/config";
+import { getBookListWithOwners } from "../services/update_view_with_booklist";
+import { fetchBookDetails } from "../services/fetch_book_details";
 
 export const setViewListeners = (app: App) => {
   app.view(

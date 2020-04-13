@@ -4,10 +4,10 @@ import * as dotenv from "dotenv";
 
 dotenv.config();
 
-import { setCommands } from "./commands";
-import { setActionListeners } from "./action_listeners";
-import { setViewListeners } from "./view_listeners";
-import { setEventListeners } from "./event_listener";
+import { setCommands } from "./listeners/commands";
+import { setActionListeners } from "./listeners/action_listeners";
+import { setViewListeners } from "./listeners/view_listeners";
+import { setEventListeners } from "./listeners/event_listener";
 
 if (process.env.NODE_ENV !== "production") {
   localtunnel({

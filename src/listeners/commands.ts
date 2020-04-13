@@ -1,5 +1,5 @@
 import { App } from "@slack/bolt";
-import { openAddBookModal } from "./add_book_modal";
+import { openAddBookModal } from "../modals/add_book_modal";
 
 export const setCommands = (app: App) => {
   app.command("/add-book", async ({ ack, body, context }) => {
