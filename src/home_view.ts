@@ -3,43 +3,6 @@ import { App } from "@slack/bolt";
 import { BookDTO, UserDTO } from "./db/db";
 import { createButton } from "./utils/slack_buttons";
 
-export const setHomeView = (app: App, token: string, userId: string) => {
-  return app.client.views.publish({
-    token,
-    user_id: userId,
-    view: {
-      type: "home",
-      callback_id: "home_view",
-      blocks: [
-        {
-          type: "section",
-          text: {
-            type: "mrkdwn",
-            text: "*Welcome to your _App's Home_* :tada:",
-          },
-        },
-        {
-          type: "divider",
-        },
-        {
-          type: "section",
-          text: {
-            type: "mrkdwn",
-            text:
-              "This button won't do much for now but you can set up a listener for it using the `actions()` method and passing its unique `action_id`. See an example in the `examples` folder within your Bolt app.",
-          },
-        },
-        {
-          type: "actions",
-          elements: [
-            createButton("Add book", "add_book"),
-            createButton("Filters", "set_filter"),
-          ],
-        },
-      ],
-    },
-  });
-};
 
 const renderBook = (
   acc: any[],
