@@ -13,6 +13,7 @@ export interface BookDTO {
   rating: number;
   amazonURL: string;
   owners: (string | UserDTO)[];
+  store: [string];
   createdBy: string;
 }
 
@@ -35,6 +36,10 @@ const BookSchema = new mongoose.Schema({
   rating: Number,
   amazonURL: String,
   owners: [String],
+  store: {
+    type: [String],
+    default: [],
+  },
   createdBy: String,
 });
 

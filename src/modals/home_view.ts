@@ -5,7 +5,17 @@ import { createButton } from "../utils/slack_buttons";
 
 const renderBook = (
   acc: any[],
-  { name, description, _id, owners, isCreator, image, rating, amazonURL }: Book,
+  {
+    name,
+    description,
+    _id,
+    owners,
+    isCreator,
+    image,
+    rating,
+    amazonURL,
+    store,
+  }: Book,
 ) => {
   let bookButtonList = [];
 
@@ -17,7 +27,15 @@ const renderBook = (
 
   return [
     ...acc,
-    renderSectionImage(image, name, amazonURL, rating, description),
+    renderSectionImage(
+      image,
+      name,
+      amazonURL,
+      rating,
+      description,
+      owners.length,
+      store.length,
+    ),
     {
       type: "actions",
       elements: bookButtonList,
@@ -97,6 +115,8 @@ function renderSectionImage(
   amazonURL: string,
   rating: number,
   description: string,
+  owners: number,
+  store: number,
 ) {
   const placeholder =
     "https://d827xgdhgqbnd.cloudfront.net/wp-content/uploads/2016/04/09121712/book-cover-placeholder.png";
@@ -107,7 +127,7 @@ function renderSectionImage(
       type: "mrkdwn",
       text: `*${mapTitle(name, amazonURL)}*\n${mapRatingToStars(
         rating,
-      )}\n${description}`,
+      )}\n${store}:${owners}\n${description}`,
     },
     accessory: {
       type: "image",
