@@ -1,7 +1,7 @@
 import { App } from "@slack/bolt";
 
-import { UserDTO, Book } from "../db/db";
-import { createButton } from "../utils/slack_buttons";
+import { UserDTO, Book } from "../../db/db";
+import { createButton } from "../../utils/slack_buttons";
 
 const renderBook = (
   acc: any[],
@@ -27,15 +27,15 @@ const renderBook = (
 
   return [
     ...acc,
-    renderSectionImage(
+    renderSectionImage({
       image,
       name,
       amazonURL,
       rating,
       description,
-      owners.length,
-      store.length,
-    ),
+      owners: owners.length,
+      store: store.length,
+    }),
     {
       type: "actions",
       elements: bookButtonList,
@@ -109,15 +109,23 @@ function mapTitle(title: string, url: string) {
   return `<${url}|${title}>`;
 }
 
-function renderSectionImage(
-  image: string,
-  name: string,
-  amazonURL: string,
-  rating: number,
-  description: string,
-  owners: number,
-  store: number,
-) {
+function renderSectionImage({
+  image,
+  name,
+  amazonURL,
+  rating,
+  description,
+  owners,
+  store,
+}: {
+  image: string;
+  name: string;
+  amazonURL: string;
+  rating: number;
+  description: string;
+  owners: number;
+  store: number;
+}) {
   const placeholder =
     "https://d827xgdhgqbnd.cloudfront.net/wp-content/uploads/2016/04/09121712/book-cover-placeholder.png";
 
