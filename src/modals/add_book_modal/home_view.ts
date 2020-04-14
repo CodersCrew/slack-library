@@ -26,6 +26,8 @@ const renderBook = (
     bookButtonList.push(createButton("I got this book too", "add_owner", _id));
   }
 
+  bookButtonList.push(createButton("Reserve book", "reserve_book", _id));
+
   return [
     ...acc,
     renderBookCard({

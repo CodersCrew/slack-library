@@ -31,6 +31,16 @@ export const setActionListeners = (app: App) => {
     }
   });
 
+  app.action("reserve_book", async ({ body, ack, action, context }) => {
+    try {
+      if (!isButtonAction(action)) return await ack();
+
+      await ack();
+    } catch (error) {
+      console.error(error);
+    }
+  });
+
   app.action("set_filter", async ({ body, ack, context }) => {
     try {
       openFilterBookModal(app, context.botToken, (body as any).trigger_id);
