@@ -1,6 +1,6 @@
 import { App, ButtonAction } from "@slack/bolt";
 
-import { openAddBookModal } from "../modals/add_book_modal";
+import { openAddBookModal } from "../modals/add_book_modal/add_book_modal";
 import { openFilterBookModal } from "../modals/filter_modal";
 import { removeBook } from "../db/book_repository";
 import { getUserIdFrom, getValueFrom } from "../utils/slack_utils";
@@ -25,6 +25,16 @@ export const setActionListeners = (app: App) => {
 
       await removeBook(getValueFrom(action), getUserIdFrom(body));
       await getBookListWithOwners(app, context, body, config.homeViewId);
+      await ack();
+    } catch (error) {
+      console.error(error);
+    }
+  });
+
+  app.action("reserve_book", async ({ body, ack, action, context }) => {
+    try {
+      if (!isButtonAction(action)) return await ack();
+
       await ack();
     } catch (error) {
       console.error(error);

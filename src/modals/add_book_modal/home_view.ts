@@ -1,11 +1,22 @@
 import { App } from "@slack/bolt";
 
-import { UserDTO, Book } from "../db/db";
-import { createButton } from "../utils/slack_buttons";
+import { UserDTO, Book } from "../../db/db";
+import { createButton } from "../../utils/slack_buttons";
+import { renderBookCard } from "./book_card";
 
 const renderBook = (
   acc: any[],
-  { name, description, _id, owners, isCreator, image, rating, amazonURL }: Book,
+  {
+    name,
+    description,
+    _id,
+    owners,
+    isCreator,
+    image,
+    rating,
+    amazonURL,
+    store,
+  }: Book,
 ) => {
   let bookButtonList = [];
 
@@ -15,9 +26,19 @@ const renderBook = (
     bookButtonList.push(createButton("I got this book too", "add_owner", _id));
   }
 
+  bookButtonList.push(createButton("Reserve book", "reserve_book", _id));
+
   return [
     ...acc,
-    renderSectionImage(image, name, amazonURL, rating, description),
+    renderBookCard({
+      image,
+      name,
+      amazonURL,
+      rating,
+      description,
+      owners: owners.length,
+      store: store.length,
+    }),
     {
       type: "actions",
       elements: bookButtonList,
@@ -80,39 +101,3 @@ const createUserImagesList = (owners: UserDTO[]) => {
     },
   );
 };
-
-function mapRatingToStars(rating: number): string {
-  return Array(Math.floor(rating)).fill("★").join("");
-}
-
-function mapTitle(title: string, url: string) {
-  if (url.length === 0) return title;
-
-  return `<${url}|${title}>`;
-}
-
-function renderSectionImage(
-  image: string,
-  name: string,
-  amazonURL: string,
-  rating: number,
-  description: string,
-) {
-  const placeholder =
-    "https://d827xgdhgqbnd.cloudfront.net/wp-content/uploads/2016/04/09121712/book-cover-placeholder.png";
-
-  return {
-    type: "section",
-    text: {
-      type: "mrkdwn",
-      text: `*${mapTitle(name, amazonURL)}*\n${mapRatingToStars(
-        rating,
-      )}\n${description}`,
-    },
-    accessory: {
-      type: "image",
-      image_url: image.length === 0 ? placeholder : image,
-      alt_text: name,
-    },
-  };
-}
