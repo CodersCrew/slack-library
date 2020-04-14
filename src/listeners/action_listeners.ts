@@ -1,6 +1,6 @@
 import { App, ButtonAction } from "@slack/bolt";
 
-import { openAddBookModal } from "../modals/add_book_modal";
+import { openAddBookModal } from "../modals/add_book_modal/add_book_modal";
 import { openFilterBookModal } from "../modals/filter_modal";
 import { removeBook } from "../db/book_repository";
 import { getUserIdFrom, getValueFrom } from "../utils/slack_utils";

@@ -3,7 +3,7 @@ import { App } from "@slack/bolt";
 import { getBookList } from "../db/book_repository";
 import { getUserDetails } from "../utils/slack_user_repository";
 import { getUserIdFromAppHomeEvent } from "../utils/slack_utils";
-import { updateHomeView } from "../modals/home_view";
+import { updateHomeView } from "../modals/add_book_modal/home_view";
 
 export const getBookListWithOwners = async (
   app: App,
