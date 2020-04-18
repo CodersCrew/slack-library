@@ -1,4 +1,5 @@
 import { App } from "@slack/bolt";
+import { createSelect } from "../../utils/slack_selects";
 
 export const openAddBookModal = (
   app: App,
@@ -35,6 +36,11 @@ export const openAddBookModal = (
               "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.\n\n *Please fill in the form:*",
           },
         },
+        createSelect({
+          label: "Category",
+          placeholder: "select category",
+          options: ["Web development", "Marketing", "Design"],
+        }),
         {
           type: "input",
           block_id: "title_book",
