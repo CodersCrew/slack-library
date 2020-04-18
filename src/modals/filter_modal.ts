@@ -1,4 +1,5 @@
 import { App } from "@slack/bolt";
+import { createCheckbox } from "../utils/slack_selects";
 
 export const openFilterBookModal = (
   app: App,
@@ -27,43 +28,10 @@ export const openFilterBookModal = (
         emoji: true,
       },
       blocks: [
-        {
-          type: "input",
-          element: {
-            type: "checkboxes",
-            options: [
-              {
-                text: {
-                  type: "plain_text",
-                  text: "Web development",
-                  emoji: true,
-                },
-                value: "value-0",
-              },
-              {
-                text: {
-                  type: "plain_text",
-                  text: "Marketing",
-                  emoji: true,
-                },
-                value: "value-1",
-              },
-              {
-                text: {
-                  type: "plain_text",
-                  text: "Design",
-                  emoji: true,
-                },
-                value: "value-2",
-              },
-            ],
-          },
-          label: {
-            type: "plain_text",
-            text: "Please select books",
-            emoji: true,
-          },
-        } as any,
+        createCheckbox({
+          label: "Please select books",
+          options: ["Web development", "Marketing", "Design"],
+        }),
       ],
     },
   });
